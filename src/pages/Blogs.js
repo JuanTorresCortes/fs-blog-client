@@ -1,32 +1,27 @@
-import React from 'react';
-import { useOutletContext } from 'react-router-dom';
+import React from "react";
+import BlogCard from "../components/BlogCard";
+import { useOutletContext } from "react-router-dom";
 
+// Blogs component to display a list of blogs
 const Blogs = () => {
-    // Access the blogs data from the context
-    const { blogs } = useOutletContext();
-
-    // Log the blogs data to the console for debugging purposes
-    console.log(blogs);
-
-    // Destructure the 'data' property from the blogs object
-    const { data } = blogs;
-
-    return (
+  // Access the blogs data from the context
+  const { blogs } = useOutletContext();
+  const { data } = blogs;
+  console.log("this is data from Blogs.js", data);
+  console.log("this is blogs in Blogs.js", blogs);
+  return (
+    <div>
+      {/* Check if the blogs data is successfully fetched */}
+      {blogs.success && (
         <div>
-            {/* Render the title */}
-            <h1>Blogs</h1>
-            {/* Check if the blogs data is successfully fetched */}
-            {blogs.success && (
-                <div>
-                    {/* Map over the data and render each blog */}
-                    {data.map((blog) => {
-                        // Render the title of each blog
-                        return <p>{blog.title}</p>;
-                    })}
-                </div>
-            )}
+          {/* Map over the blogs data and render a BlogCard for each blog */}
+          {data.map((blog) => (
+            <BlogCard key={blog._id} blog={blog} />
+          ))}
         </div>
-    );
-}
+      )}
+    </div>
+  );
+};
 
 export default Blogs;

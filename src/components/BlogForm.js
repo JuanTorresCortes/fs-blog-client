@@ -1,8 +1,6 @@
-// BlogForm.js
-
 // Import necessary dependencies
 import React, { useState } from 'react';
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 // Define the BlogForm component
 const BlogForm = () => {
@@ -12,18 +10,28 @@ const BlogForm = () => {
   const [author, setAuthor] = useState("");
     
   // Access the handleNewBlog function from the context
-  const { handleNewBlog } = useOutletContext();
+  const { handleNewBlog, setShouldRefresh } = useOutletContext();
+  
+  // Import the useNavigate hook from React Router DOM 
+  const navigate = useNavigate()
 
   // Handle form submission
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    
+    setShouldRefresh(true)
+
     const newBlog = {
       title,
       content,
       author,
     };
+
     // Call the handleNewBlog function with the new blog data
     handleNewBlog(newBlog);
+    
+    // Perform navigation to the specified path ("/")
+    navigate("/")
   }
 
   // Render the BlogForm component

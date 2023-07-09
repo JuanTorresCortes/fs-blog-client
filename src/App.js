@@ -1,46 +1,49 @@
-// App.js
-
 // Import necessary dependencies and styles
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import "./App.css";
+import NavBar from "./components/NavBar";
 
 // Define the App component
 function App() {
   // State to store the blogs
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState({});
+  const [shouldRefresh, setShouldRefresh] = useState(false);
+
+  const url = process.env.REACT_APP_URL_ENDPOINT;
 
   // Fetch blogs data from the server
   useEffect(() => {
-    const url = process.env.REACT_APP_URL_ENDPOINT;
     const getData = async () => {
       const response = await fetch(`${url}/blogs/all-blogs`);
       const data = await response.json();
       setBlogs(data);
     };
     getData();
-  }, []);
+  }, [url, shouldRefresh]);
 
   // Function to handle the creation of a new blog
   const handleNewBlog = async (blog) => {
-    const url = process.env.REACT_APP_URL_ENDPOINT;
     const response = await fetch(`${url}/blogs/new-blog`, {
       method: "POST",
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
       },
-      body: JSON.stringify(blog)
+      body: JSON.stringify(blog),
     });
+    // console.log(response)
     const data = await response.json();
+    setShouldRefresh(false);
     console.log("data", data);
-  }
+  };
 
   // Render the App component
   return (
     <div className="App">
-      <h1>hello</h1>
+      <NavBar />
+      <h1>Blogs</h1>
       {/* Render the child component based on the matched route */}
-      <Outlet context={{ handleNewBlog, blogs }} />
+      <Outlet context={{ handleNewBlog, blogs, setShouldRefresh }} />
     </div>
   );
 }

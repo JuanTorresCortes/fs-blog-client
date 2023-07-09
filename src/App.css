@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.blog-card {
+  border: 2px solid red;
+  width: 45%;
+  margin: auto;
+}
