@@ -31,7 +31,6 @@ function App() {
       },
       body: JSON.stringify(blog),
     });
-    // console.log(response)
     const data = await response.json();
     setShouldRefresh(false);
     console.log("data", data);
@@ -42,8 +41,18 @@ function App() {
     <div className="App">
       <NavBar />
       <h1>Blogs</h1>
+      <select>
+        <option value="new">Newest blog</option>
+        <option value="old">Oldest blog</option>
+      </select>
       {/* Render the child component based on the matched route */}
-      <Outlet context={{ handleNewBlog, blogs, setShouldRefresh }} />
+      <Outlet
+        context={{
+          handleNewBlog,
+          blogs,
+          setShouldRefresh,
+        }}
+      />
     </div>
   );
 }

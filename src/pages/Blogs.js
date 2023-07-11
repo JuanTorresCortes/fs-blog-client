@@ -7,8 +7,8 @@ const Blogs = () => {
   // Access the blogs data from the context
   const { blogs } = useOutletContext();
   const { data } = blogs;
-  console.log("this is data from Blogs.js", data);
-  console.log("this is blogs in Blogs.js", blogs);
+  // console.log("this is data from Blogs.js", data);
+  // console.log("this is blogs in Blogs.js", blogs);
   return (
     <div>
       {/* Check if the blogs data is successfully fetched */}
